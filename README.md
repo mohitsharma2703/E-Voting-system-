@@ -1,62 +1,215 @@
-# E-Voting System - Secure and Transparent Blockchain-Based Voting System (academic prototype)
+# 🗳️ E-Voting System
+### Secure and Transparent Blockchain-Based Electronic Voting System
 
-NOT production-ready and NOT suitable for real public or government elections.
+A decentralized electronic voting application built using **Blockchain Technology** to make the voting process more transparent, reliable and tamper-resistant.
 
-## Status
-| Part | State |
+## 📌 Project Overview
+
+The E-Voting System is a web-based application that allows administrators to create and manage elections while enabling authorized voters to cast their votes through a blockchain-powered voting mechanism.
+
+The project uses Ethereum smart contracts to record votes and maintain election data on a blockchain network.
+
+## 🎯 Objectives
+
+- Provide a digital platform for conducting elections.
+- Improve transparency in the voting process.
+- Restrict voting to authorized wallet addresses.
+- Prevent a wallet from voting more than once in an election.
+- Maintain verifiable election records using blockchain technology.
+- Allow users to view election results.
+
+## ✨ Key Features
+
+- **Admin Dashboard:** Create and manage elections.
+- **Candidate Management:** Add and manage election candidates.
+- **Voter Authorization:** Authorize wallet addresses to participate in elections.
+- **Blockchain Voting:** Cast votes through MetaMask transactions.
+- **One Wallet, One Vote:** Prevent duplicate voting by the same wallet in an election.
+- **Election Results:** Display candidate vote counts and election results.
+- **Transaction Verification:** Inspect blockchain transaction details.
+- **Wallet Integration:** Connect MetaMask to interact with smart contracts.
+
+## 🛠️ Technology Stack
+
+| Component | Technologies |
 |---|---|
-| blockchain/ (Hardhat, Voting.sol, 28 tests, deploy + seed scripts) | Done and tested |
-| frontend/ (React + Vite + Tailwind + ethers.js + MetaMask): landing, elections, vote flow, tx status, results chart, verify-transaction, admin dashboard | Done (Phase 6) |
-| backend/ (Express + MongoDB, JWT, bcrypt, roles, voter verification, candidate applications, on-chain admin actions) | Written (Phase 7), see backend/README.md. Not yet run on a real machine |
-| Frontend login/registration pages, voter profile, candidate dashboard, admin verification screens | NOT built yet (Phase 8): the API exists, the screens do not |
+| Frontend | React.js, Vite, Tailwind CSS |
+| Backend | Node.js, Express.js |
+| Blockchain | Solidity, Ethereum |
+| Development Environment | Hardhat |
+| Blockchain Interaction | Ethers.js |
+| Wallet | MetaMask |
+| Database | MongoDB |
+| Authentication | JWT |
 
-Until the backend exists, the admin is "whoever holds the contract owner wallet" and voters are "wallets the admin authorized". Passwords and logins arrive in Phase 7.
+## 🏗️ Project Architecture
 
-## Run everything (Windows PowerShell, Node.js 20 LTS)
-Window 1 - local blockchain (keep open):
-```powershell
-cd evoting-blockchain\blockchain
-npm install
-npx hardhat test
-npx hardhat node
+The application consists of three major components:
+
+1. **Frontend:** Provides the user interface for administrators and voters.
+2. **Backend:** Handles API requests, database operations and supporting application services.
+3. **Blockchain:** Executes smart contracts and records voting transactions.
+
+## 📂 Project Structure
+
+```text
+E-Voting-System/
+│
+├── backend/
+│   ├── src/
+│   │   ├── contracts/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── scripts/
+│   │   └── services/
+│   ├── package.json
+│   └── .env.example
+│
+├── blockchain/
+│   ├── contracts/
+│   │   └── Voting.sol
+│   ├── scripts/
+│   ├── test/
+│   ├── hardhat.config.js
+│   └── package.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── contracts/
+│   │   ├── lib/
+│   │   └── pages/
+│   └── package.json
+│
+├── .gitignore
+└── README.md
 ```
-Window 2 - deploy and load demo data:
-```powershell
-cd evoting-blockchain\blockchain
+
+## ⚙️ Installation and Setup
+
+### Prerequisites
+
+Install the following before running the application:
+
+- Node.js and npm
+- MetaMask browser extension
+- MongoDB
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/mohitsharma2703/E-Voting-system-.git
+cd E-Voting-system-
+```
+
+### 2. Install Blockchain Dependencies
+
+```bash
+cd blockchain
+npm install
+```
+
+Configure the required environment variables using the provided `.env.example` file, if required by the project configuration.
+
+### 3. Start the Local Blockchain
+
+Open a terminal inside the `blockchain` directory:
+
+```bash
+npm run node
+```
+
+Keep this terminal running.
+
+### 4. Deploy the Smart Contract
+
+Open another terminal:
+
+```bash
+cd blockchain
 npm run deploy:local
+```
+
+### 5. Seed Demo Elections
+
+```bash
 npm run seed:local
 ```
-Window 3 - website:
-```powershell
-cd evoting-blockchain\frontend
+
+### 6. Start the Backend
+
+Open another terminal:
+
+```bash
+cd backend
+npm install
+```
+
+Configure the backend environment variables using `backend/.env.example`, then run:
+
+```bash
+npm run dev
+```
+
+### 7. Start the Frontend
+
+Open another terminal:
+
+```bash
+cd frontend
 npm install
 npm run dev
 ```
-Open http://localhost:5173
 
-The local chain forgets everything when `hardhat node` stops. After every restart: run `deploy:local` then `seed:local` again, and in MetaMask use Settings > Advanced > Clear activity tab data for each account.
+Open the local URL displayed by Vite, usually:
 
-## MetaMask setup
-1. Add network: name `Hardhat Local`, RPC `http://127.0.0.1:8545`, chain ID `31337`, symbol `ETH` (the site's "Switch network" button can also add it).
-2. `npx hardhat node` prints 20 public TEST accounts with private keys. Import them in MetaMask via Import account. Use test keys on the local chain only, never with real funds.
-3. Account #0 = admin (contract owner). Accounts #1 to #5 = voters, already authorized in the demo elections.
+```text
+http://localhost:5173
+```
 
-## Demo data created by `seed:local`
-- Election 1 "Class Representative 2025": ended, 4 votes, so the Results page has a chart.
-- Election 2 "Student Council 2026": active, voters #1-#5 can vote now.
-- Election 3 "Sports Committee 2026": upcoming.
+## 🔄 How the System Works
 
-## Suggested 25 November demo flow
-1. Landing page, then explain the limitations panel.
-2. Elections list, then Results of election 1.
-3. Connect MetaMask as account #1, vote in election 2, show the pending to confirmed status and the hash.
-4. Try voting again to show the duplicate-vote rejection.
-5. Click Verify on chain: show block hash and previous block hash (tamper-evidence).
-6. Switch to account #0, open Admin: create an election, add and approve a candidate, authorize a wallet.
+1. The administrator connects their MetaMask wallet.
+2. The administrator creates an election and manages candidates.
+3. Eligible voter wallet addresses are authorized.
+4. Voters connect their authorized wallets.
+5. Voters select a candidate and confirm the transaction through MetaMask.
+6. The smart contract records the vote and prevents repeat voting by the same wallet.
+7. Election results can be retrieved and displayed.
+8. Blockchain transactions can be inspected for verification.
 
-## Known limitations (say these in the viva)
-- Wallet-based duplicate prevention is not real-world identity verification (one person can own many wallets).
-- Votes are pseudonymous, not secret: the VoteCast event links a wallet to a candidate. Not coercion-resistant.
-- The contract hides vote counts until the election ends through its view functions only; raw chain data is still readable by anyone.
-- Candidate notes are short on-chain text. Rich profiles and manifestos move off-chain (MongoDB) in Phase 7.
-- Future work: zero-knowledge proofs, blind signatures, receipt-free voting, KYC-linked wallet issuance.
+## 🔐 Security Considerations
+
+- Smart contract access controls restrict administrative operations.
+- Authorized wallet checks restrict voting participation.
+- Duplicate voting is prevented at the smart contract level.
+- Blockchain transactions provide publicly verifiable records.
+- Environment variables and private credentials should never be committed to GitHub.
+
+**Note:** Wallet authorization alone does not establish a voter's real-world identity. A production deployment would require an additional student identity-verification process and an independent security audit.
+
+## 🚀 Future Enhancements
+
+- Student identity verification.
+- Improved voter eligibility management.
+- Enhanced election analytics and reporting.
+- Deployment to a public Ethereum-compatible test network.
+- Additional security and smart contract testing.
+- Improved accessibility and user experience.
+
+## 👨‍💻 Project Information
+
+**Project Name:** E-Voting System
+
+**Domain:** Blockchain Technology and Web Development
+
+**Project Type:** Academic Major Project
+
+**Repository:** [E-Voting System on GitHub](https://github.com/mohitsharma2703/E-Voting-system-)
+
+---
+
+*Developed as an academic project to explore blockchain-based electronic voting and transparent election management.*
