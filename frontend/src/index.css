@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-paper: #f6f5fa;
+  --color-ink: #1a1240;
+  --color-mute: #5d5878;
+  --color-rule: #d9d6e6;
+  --color-indelible: #3b2486;
+  --color-indelible-soft: #ece8f8;
+  --color-ok: #1f7a4d;
+  --color-ok-soft: #e1f3ea;
+  --color-warn: #8a5300;
+  --color-warn-soft: #fdf0d8;
+  --color-bad: #b3261e;
+  --color-bad-soft: #fbe5e3;
+}
+
+html { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); }
+body { min-height: 100vh; }
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+:focus-visible { outline: 3px solid var(--color-indelible); outline-offset: 2px; }
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply bg-indelible text-white hover:bg-ink; }
+  .btn-quiet { @apply border border-rule bg-white text-ink hover:bg-indelible-soft; }
+  .btn-danger { @apply border border-bad/40 bg-white text-bad hover:bg-bad-soft; }
+  .field { @apply w-full rounded-md border border-rule bg-white px-3 py-2.5 text-sm text-ink placeholder:text-mute/70; }
+  .label { @apply mb-1 block text-sm font-medium text-ink; }
+  .panel { @apply rounded-lg border border-rule bg-white p-5 sm:p-6; }
+}
+
+@keyframes stamp {
+  0% { transform: scale(2.2) rotate(-14deg); opacity: 0; }
+  60% { transform: scale(0.94) rotate(-6deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-6deg); opacity: 1; }
+}
+.stamp { animation: stamp 0.55s 0.9s cubic-bezier(.2,.8,.3,1) both; }
+@media (prefers-reduced-motion: reduce) { .stamp { animation: none; } }

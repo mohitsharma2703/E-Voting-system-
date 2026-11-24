@@ -1,0 +1,21 @@
+{
+  "name": "evoting-blockchain",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smart contract layer (Hardhat) for the Blockchain E-Voting System - academic prototype",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "seed:local": "hardhat run scripts/seed-demo.js --network localhost"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.29.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.6.1",
+    "dotenv": "^18.0.10"
+  }
+}
